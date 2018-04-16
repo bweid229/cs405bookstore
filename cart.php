@@ -1,6 +1,4 @@
 
-
-
 <?php
 if(!isset($_SESSION)) 
     { 
@@ -10,32 +8,37 @@ if(!isset($_SESSION))
     include 'phhadd.php';
 	include 'searchbar.php';
 
-{
 mysqli_select_db($conn, "bookstore_test4") or die(mysqli_error($conn));         
 
+		echo "<h2>Your Cart</h2>";
 
-         
-        $results = mysqli_query($conn, "SELECT `title`, `ISBN`, `price` FROM books");
-                      
-        if(mysqli_num_rows($results) > 0){
+         if(isset($_SESSION['login_user'])){
+			$userid2 = $_SESSION['login_user'];
+			$results = mysqli_query($conn, "SELECT `title`, `ISBN`, `price`, cart.`quantity`, `userID` FROM (books JOIN cart ON books.bookID = cart.bookID) WHERE userID = '$userid2';");                
+			if(mysqli_num_rows($results) > 0){
 			
 			echo "<table style='float:left'>".
 				"<tr>".
 				"<th>Title</th>".
 				"<th>Price</th>".
 				"<th>ISBN</th>".
-				"</tr>";
+				"<th>Quantity</th>".
+
+				"</tr>";     
              
             while ($row = mysqli_fetch_assoc($results)) {
 			echo"<tr>\n" .
           "  <td>".$row["title"]."</td>\n" .
           "  <td>".$row["price"]."</td>\n" .
 		  "  <td>".$row["ISBN"]."</td>\n" .
-		  "  <td>"."<form method='post' action='addcart.php'><input type ='number' name='quantity'><input type='submit' name='Add to Cart' /></form>"."</td>\n" .
+		  "  <td>".$row["quantity"]."</td>\n" .
+
           " </tr>\n";
 			}
             
-           echo"</table>";  
+           echo"</table><br>";  
+		   echo "<a href ='checkout.php'>Checkout<a/>";
+
         }
         else{ 
             echo "No Books!";

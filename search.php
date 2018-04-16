@@ -91,7 +91,7 @@ mysqli_select_db($conn, "bookstore_test4") or die(mysqli_error($conn));
         $results = mysqli_query($conn, "SELECT `title` , `price`, `ISBN` FROM books
             WHERE (`title` LIKE '%".$query."%') OR (`title` LIKE '%".$query."%')") or die(mysqli_error($conn));
          
-		echo  '<a href="homepage.php">.Go back to Home.</a>';
+		echo  '<a href="index.php">.Go back to Home.</a>';
 		echo "\n";
         if(mysqli_num_rows($results) > 0){ 
              

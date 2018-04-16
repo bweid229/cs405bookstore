@@ -75,19 +75,35 @@ body {
 }
 
 </style>
-<?php include 'search.php';?>
+<?php 
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
+include 'search.php';
+?>
+
 </head>
 <body>
 
 <div class="topnav">
-  <a class="active" href="homepage.php">Home</a>
+  <a class="active" href="index.php">Home</a>
   <a href="about.php">About</a>
   <a href="browse.php">Browse</a>
   <a href="loginpg.php">Login</a>
+    <a href="cart.php">Cart</a>
+
+<?php if(isset($_SESSION['login_type'])){
+	if($_SESSION['login_type'] == 1){
+		
+	echo "<a href='manager.php'>Manage</a>";
+	}
+}
+?>
 
   <div class="search-container">
     <form action="search.php"method="GET">
-		<input type="text" name="query" >
+		<input type="text" name="query" placeholder="search" >
     </form>
   </div>
 
