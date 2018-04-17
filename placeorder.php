@@ -45,6 +45,8 @@ mysqli_select_db($conn, "bookstore_test4") or die(mysqli_error($conn));
 				VALUES ($bookID, $quantity, $last_id)";
 			if (mysqli_query($conn, $sql_2)) {
 					echo "Order placed succesffuly. Thank you!";
+					$delete_cart = "DELETE FROM cart WHERE userid = $userid2";
+					mysqli_query($conn, $delete_cart);
 				}			 		
 				else {
 						echo "Error: " . $sql_2 . "<br>" . mysqli_error($conn);
